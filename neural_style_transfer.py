@@ -23,7 +23,7 @@ def deprocess_image(x):
     x[:, :, 1] += 116.779
     x[:, :, 2] += 123.68
     # BGR -> RGB
-    x = x[:, :, -1]
+    x = x[:, :, ::-1]
     x = np.clip(x, 0, 255).astype('uint8')
     return x
 
@@ -43,7 +43,9 @@ def content_loss(base, combination):
 
 def gram_matrix(x):
     features = K.batch_flatten(K.permute_dimensions(x, (2, 0, 1)))
+    print(features)
     gram = K.dot(features, K.transpose(features))
+    print(gram)
     return gram
 
 def style_loss(style, combination):
@@ -113,7 +115,7 @@ evaluator = Evaluator()
 from scipy.misc import imsave
 from scipy.optimize import fmin_l_bfgs_b
 import time
-result_prefix = 'my_result'
+result_prefix = 'Results/Neural_Style_transfer/my_result'
 iterations = 20
 # Run scipy-based optimization (L-BFGS) over the pixels of the generated image
 # so as to minimize the neural style loss.
