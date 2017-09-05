@@ -51,7 +51,7 @@ def model(x_train, y_train, x_test, y_test):
 
     model.compile(loss='categorical_crossentropy', metrics=['acc'], optimizer={{choice(['rmsprop', 'adam', 'sgd'])}})
 
-    model.fit(x_train, y_train, batch_size={{choice([64, 128])}}, epochs=1, verbose=2, validation_data=(x_test, y_test))
+    history = model.fit(x_train, y_train, batch_size={{choice([64, 128])}}, epochs=1, verbose=2, validation_data=(x_test, y_test))
 
     score, acc = model.evaluate(x_test, y_test, verbose=0)
     print('Test accuracy:', acc)
